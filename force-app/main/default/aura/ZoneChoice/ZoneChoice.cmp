@@ -1,0 +1,60 @@
+<aura:component
+    implements="lightning:availableForFlowScreens"
+    access="global"
+    controller="ZoneChoiceController"
+>
+    <aura:attribute name="SeanceId" type="String" access="global" />
+    <aura:attribute name="ZoneId" type="String" access="global" />
+    <aura:attribute name="zones" type="Zone__c[]" />
+    <aura:attribute name="ArriereId" type="String" />
+    <aura:attribute name="CotesId" type="String" />
+    <aura:attribute name="EtageId" type="String" />
+    <aura:attribute name="MilieuId" type="String" />
+    <aura:attribute name="PremierRangId" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{! c.doInit}" />
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="2" padding="arround-small"></lightning:layoutItem>
+        <lightning:layoutItem size="8" padding="arround-small">
+            <div class="slds-box slds-theme_shade scene-box">
+                Scène
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="2" padding="arround-small"></lightning:layoutItem>
+        <lightning:layoutItem size="12" padding="arround-small">
+            <aura:if isTrue="{!v.PremierRangId!=null}">
+                <div class="{! v.PremierRangId == v.ZoneId ? ' slds-box slds-theme_shade custom-box selected-box' : 'slds-box slds-theme_shade custom-box' }" id="{!v.PremierRangId}" onclick="{!c.onSelected}">
+                    Premier Rang
+                </div>
+            </aura:if>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="3">
+            <aura:if isTrue="{!v.CotesId!=null}">
+                <div class="{! v.CotesId == v.ZoneId ? ' slds-box slds-theme_shade custom-box selected-box' : 'slds-box slds-theme_shade custom-box' }" id="{!v.CotesId}" onclick="{!c.onSelected}">Côtés</div>
+            </aura:if>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="6" padding="arround-small">
+            <div class="slds-grid slds-grid_vertical">
+                <aura:if isTrue="{!v.MilieuId!=null}">
+                    <div class="slds-col" padding="arround-small">
+                        <div class="{! v.MilieuId == v.ZoneId ? ' slds-box slds-theme_shade custom-box selected-box' : 'slds-box slds-theme_shade custom-box' }" id="{!v.MilieuId}" onclick="{!c.onSelected}">
+                            Milieu
+                        </div>
+                    </div>
+                </aura:if>
+                <aura:if isTrue="{!v.ArriereId!=null}">
+                    <div class="slds-col" padding="arround-small">
+                        <div class="{! v.ArriereId == v.ZoneId ? ' slds-box slds-theme_shade custom-box selected-box' : 'slds-box slds-theme_shade custom-box' }" id="{!v.ArriereId}" onclick="{!c.onSelected}">
+                            Arrière
+                        </div>
+                    </div>
+                </aura:if>
+            </div>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="3">
+            <aura:if isTrue="{!v.EtageId!=null}">
+                <div class="{! v.EtageId == v.ZoneId ? ' slds-box slds-theme_shade custom-box selected-box' : 'slds-box slds-theme_shade custom-box' }" id="{!v.EtageId}" onclick="{!c.onSelected}">Etage</div>
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

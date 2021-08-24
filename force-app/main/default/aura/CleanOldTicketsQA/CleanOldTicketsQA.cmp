@@ -1,0 +1,25 @@
+<aura:component
+    controller="CleanOldTicketsApexController"
+    implements="force:lightningQuickAction"
+>
+    <aura:attribute name="selectedDate" type="Date" />
+    <div class="slds-align_absolute-center" style="height: 5rem">
+        <lightning:layout horizontalALign="center" verticalAlign="end">
+            <lightning:layoutItem padding="around-small">
+                <lightning:input
+                    type="date"
+                    name="beforeDateInput"
+                    label="Nettoyer les tickets datant d'avant:"
+                    value="{!v.selectedDate}"
+                />
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small">
+                <lightning:button
+                    label="Nettoyer les tickets"
+                    variant="brand"
+                    onclick="{! c.cleanTicketsJS }"
+                />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

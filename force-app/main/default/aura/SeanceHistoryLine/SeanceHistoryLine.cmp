@@ -1,0 +1,14 @@
+<aura:component>
+    <aura:attribute name="seance" type="Seance__c" />
+    <aura:attribute name="seancetype" type="String" />
+    <tr onclick="{!c.navigate}">
+        <td>
+            <p class="{!v.seancetype}">{!v.seance.Representation__r.Name}</p>
+        </td>
+        <td>
+            <lightning:formattedDateTime value="{!v.seance.Jour_et_Heure__c}" />
+        </td>
+        <td>{!v.seance.Ticket_vendus__c}</td>
+        <td>{!v.seance.Revenu__c}</td>
+    </tr>
+</aura:component>

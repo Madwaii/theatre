@@ -1,0 +1,4 @@
+<design:component >
+    <design:attribute name="SeanceId" label="Seance Id"/>
+    <design:attribute name="ZoneId" label="Zone Id"/>
+</design:component>

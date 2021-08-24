@@ -1,0 +1,22 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="RpzListController">
+    <aura:attribute name="representations" type="Representation__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{! c.doInit}" />
+    <lightning:layout multipleRows="true">
+        <aura:if isTrue="{!v.representations.length > 0}">
+            <aura:iteration items="{!v.representations}" var="representation">
+                <lightning:layoutItem size="3">
+                    <c:RpzTile representation="{!representation}" />
+                </lightning:layoutItem>
+            </aura:iteration>
+            <aura:set attribute="else">
+                <lightning:layoutItem
+                    class="slds-align_absolute-center"
+                    flexibility="auto"
+                    padding="around-small"
+                >
+                    Aucune représentation trouvée
+                </lightning:layoutItem>
+            </aura:set>
+        </aura:if>
+    </lightning:layout>
+</aura:component>	

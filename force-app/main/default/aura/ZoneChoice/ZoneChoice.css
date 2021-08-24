@@ -1,0 +1,17 @@
+.THIS .custom-box {
+
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+
+}
+
+.THIS .scene-box {
+    text-align: center;
+    vertical-align: middle;
+    background-color:lightgrey;
+}
+
+.THIS .selected-box {
+    border: 4px solid blue;
+}

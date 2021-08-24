@@ -1,0 +1,34 @@
+<aura:component
+    implements="force:lightningQuickAction"
+    access="global"
+>
+    <aura:attribute name="selectedStartDate" type="Date" />
+    <aura:attribute name="selectedEndDate" type="Date" />
+    <div class="slds-align_absolute-center" style="height: 5rem">
+        <lightning:layout horizontalALign="center" verticalAlign="end">
+            <lightning:layoutItem padding="around-small">
+                <lightning:input
+                    type="date"
+                    name="startDateInput"
+                    label="Date de début :"
+                    value="{!v.selectedStartDate}"
+                />
+            </lightning:layoutItem>
+                <lightning:layoutItem padding="around-small">
+                <lightning:input
+                type="date"
+                name="endDateInput"
+                label="Date de fin (incluse):"
+                value="{!v.selectedEndDate}"
+            />
+            </lightning:layoutItem>
+            <lightning:layoutItem padding="around-small">
+                <lightning:button
+                    label="Générer le compte de résultat"
+                    variant="brand"
+                    onclick="{! c.generate }"
+                />
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

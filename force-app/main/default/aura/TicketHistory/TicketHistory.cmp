@@ -1,0 +1,123 @@
+<aura:component
+    implements="forceCommunity:availableForAllPageTypes,lightning:isUrlAddressable"
+    controller="TicketHistoryController"
+>
+    <aura:attribute name="seanceId" type="String" />
+    <aura:attribute name="seanceType" type="String" />
+    <aura:attribute name="tickets" type="Ticket__c[]" />
+    <aura:attribute name="isButtonActive" type="Boolean" default="true" />
+    <aura:handler name="init" value="{!this}" action="{! c.doInit}" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <div class="slds">
+        <aura:if isTrue="{!v.seanceType=='farSeance'}">
+            <div class="slds-grid slds-grid_align-end slds-var-p-around_small">
+                <button
+                    class="slds-button slds-button--brand"
+                    onclick="{!c.cancelTickets}"
+                    disabled="{!v.isButtonActive}"
+                >
+                    Annuler tickets selectionnés
+                </button>
+            </div>
+            <table class="slds-table slds-table--bordered slds-table--striped">
+                <thead>
+                    <tr>
+                        <th
+                            style="width: 3.25rem"
+                            class="slds-text-align_right"
+                        >
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <label class="slds-checkbox">
+                                        <!--header checkbox for select all-->
+                                        <ui:inputCheckbox
+                                            aura:id="box3"
+                                            change="{!c.selectAll}"
+                                        />
+                                        <span
+                                            class="slds-checkbox--faux"
+                                        ></span>
+                                        <span
+                                            class="slds-form-element__label text"
+                                        ></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <span class="slds-truncate">Place</span>
+                        </th>
+                        <th scope="col">
+                            <span class="slds-truncate">Zone</span>
+                        </th>
+                        <th scope="col">
+                            <span class="slds-truncate">Prix</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.tickets}" var="ticket">
+                        <tr>
+                            <td
+                                scope="row"
+                                class="slds-text-align_right"
+                                style="width: 3.25rem"
+                            >
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <label class="slds-checkbox">
+                                            <ui:inputCheckbox
+                                                text="{!ticket.Id}"
+                                                aura:id="boxPack"
+                                                value=""
+                                                change="{!c.onChange}"
+                                            />
+                                            <span
+                                                class="slds-checkbox--faux"
+                                            ></span>
+                                            <span
+                                                class="slds-form-element__label text"
+                                            ></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>{!ticket.Place__c}</td>
+                            <td>{!ticket.Zone__r.Name}</td>
+                            <td>{!ticket.Prix__c}</td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+
+            <aura:set attribute="else">
+                <table
+                    class="slds-table slds-table--bordered slds-table--striped"
+                >
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <span class="slds-truncate">Place</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate">Zone</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate">Prix</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.tickets}" var="ticket">
+                            <tr>
+                                <td>{!ticket.Place__c}</td>
+                                <td>{!ticket.Zone__r.Name}</td>
+                                <td>{!ticket.Prix__c}</td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </aura:set>
+        </aura:if>
+    </div>
+</aura:component>

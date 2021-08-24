@@ -1,0 +1,36 @@
+<aura:component
+    implements="forceCommunity:availableForAllPageTypes"
+    controller="SeanceHistoryController"
+>
+    <aura:attribute name="seances" type="Seance__c[]" />
+    <aura:attribute name="todayDate" type="Date" />
+    <aura:attribute name="inOneWeekDate" type="Date" />
+    <aura:handler name="init" value="{!this}" action="{! c.doInit}" />
+
+    <div class="slds">
+        <table class="slds-table slds-table--bordered slds-table--striped">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <span class="slds-truncate">Représentation</span>
+                    </th>
+                    <th scope="col"><span class="slds-truncate">Date</span></th>
+                    <th scope="col">
+                        <span class="slds-truncate">Tickets achetés</span>
+                    </th>
+                    <th scope="col">
+                        <span class="slds-truncate">Coût</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.seances}" var="seance">
+                    <c:SeanceHistoryLine
+                        seance="{!seance}"
+                        seancetype="{! if(seance.Jour__c &lt; v.todayDate , 'pastSeance' , if(seance.Jour__c &lt; v.inOneWeekDate , 'nearSeance' , 'farSeance')) }"
+                    />
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+</aura:component>

@@ -1,0 +1,290 @@
+<aura:component
+    implements="force:lightningQuickAction,force:hasRecordId"
+    controller="RpzSchedulerController"
+    access="global"
+>
+    <aura:html tag="style">
+        .slds-modal__container{ width: 70%; max-width: 60rem; }
+    </aura:html>
+    <aura:attribute
+        name="record"
+        type="Object"
+        description="The record object to be displayed"
+    />
+    <aura:attribute
+        name="simpleRecord"
+        type="Object"
+        description="A simplified view record object to be displayed"
+    />
+    <aura:attribute
+        name="recordError"
+        type="String"
+        description="An error message bound to force:recordData"
+    />
+
+    <force:recordData
+        aura:id="record"
+        layoutType="FULL"
+        recordId="{!v.recordId}"
+        targetError="{!v.recordError}"
+        targetRecord="{!v.record}"
+        targetFields="{!v.simpleRecord}"
+        mode="VIEW"
+    />
+    <aura:attribute name="allSeances" type="Seance__c[]" />
+    <aura:attribute name="selectedSeances" type="String[]" />
+
+    <aura:attribute name="A10hSeance" type="String" default="Vide" />
+    <aura:attribute name="A14hSeance" type="String" default="Vide" />
+    <aura:attribute name="A17hSeance" type="String" default="Vide" />
+    <aura:attribute name="A20hSeance" type="String" default="Vide" />
+    <aura:attribute name="B10hSeance" type="String" default="Vide" />
+    <aura:attribute name="B14hSeance" type="String" default="Vide" />
+    <aura:attribute name="B17hSeance" type="String" default="Vide" />
+    <aura:attribute name="B20hSeance" type="String" default="Vide" />
+    <aura:attribute name="C10hSeance" type="String" default="Vide" />
+    <aura:attribute name="C14hSeance" type="String" default="Vide" />
+    <aura:attribute name="C17hSeance" type="String" default="Vide" />
+    <aura:attribute name="C20hSeance" type="String" default="Vide" />
+    <aura:attribute name="D10hSeance" type="String" default="Vide" />
+    <aura:attribute name="D14hSeance" type="String" default="Vide" />
+    <aura:attribute name="D17hSeance" type="String" default="Vide" />
+    <aura:attribute name="D20hSeance" type="String" default="Vide" />
+    <aura:attribute name="E10hSeance" type="String" default="Vide" />
+    <aura:attribute name="E14hSeance" type="String" default="Vide" />
+    <aura:attribute name="E17hSeance" type="String" default="Vide" />
+    <aura:attribute name="E20hSeance" type="String" default="Vide" />
+
+    <aura:attribute name="selectedDate" type="Date" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <h1>Réservations pour {!v.simpleRecord.Name}</h1>
+    <lightning:layout multipleRows="true">
+        <lightning:layoutItem size="8" padding="arround-small">
+            <lightning:layout multipleRows="true">
+                <lightning:layoutItem size="12" padding="arround-small">
+                    <lightning:input
+                        type="date"
+                        name="startDateInput"
+                        label="Jour :"
+                        value="{!v.selectedDate}"
+                        onchange="{!c.load}"
+                    />
+                </lightning:layoutItem>
+                <lightning:layoutItem size="12" padding="arround-small">
+                    <div class="slds slds-scrollable_x">
+                        <table
+                            class="slds-table slds-table--bordered slds-table--striped"
+                            padding="arround-small"
+                        >
+                            <tr>
+                                <th scope="col">
+                                    <span class="slds-truncate">Heure</span>
+                                </th>
+                                <th scope="col">
+                                    <span class="slds-truncate">Salle A</span>
+                                </th>
+                                <th scope="col">
+                                    <span class="slds-truncate">Salle B</span>
+                                </th>
+                                <th scope="col">
+                                    <span class="slds-truncate">Salle C</span>
+                                </th>
+                                <th scope="col">
+                                    <span class="slds-truncate">Salle D</span>
+                                </th>
+                                <th scope="col">
+                                    <span class="slds-truncate">Salle E</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    <span class="slds-truncate">10h</span>
+                                </th>
+                                <td
+                                    class="{! v.A10hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="A10hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.A10hSeance}
+                                </td>
+                                <td
+                                    class="{! v.B10hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="B10hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.B10hSeance}
+                                </td>
+                                <td
+                                    class="{! v.C10hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="C10hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.C10hSeance}
+                                </td>
+                                <td
+                                    class="{! v.D10hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="D10hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.D10hSeance}
+                                </td>
+                                <td
+                                    class="{! v.E10hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="E10hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.E10hSeance}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    <span class="slds-truncate">14h</span>
+                                </th>
+                                <td
+                                    class="{! v.A14hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="A14hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.A14hSeance}
+                                </td>
+                                <td
+                                    class="{! v.B14hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="B14hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.B14hSeance}
+                                </td>
+                                <td
+                                    class="{! v.C14hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="C14hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.C14hSeance}
+                                </td>
+                                <td
+                                    class="{! v.D14hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="D14hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.D14hSeance}
+                                </td>
+                                <td
+                                    class="{! v.E14hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="E14hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.E14hSeance}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    <span class="slds-truncate">17h</span>
+                                </th>
+                                <td
+                                    class="{! v.A17hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="A17hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.A17hSeance}
+                                </td>
+                                <td
+                                    class="{! v.B17hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="B17hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.B17hSeance}
+                                </td>
+                                <td
+                                    class="{! v.C17hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="C17hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.C17hSeance}
+                                </td>
+                                <td
+                                    class="{! v.D17hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="D17hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.D17hSeance}
+                                </td>
+                                <td
+                                    class="{! v.E17hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="E17hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.E17hSeance}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="col">
+                                    <span class="slds-truncate">20h</span>
+                                </th>
+                                <td
+                                    class="{! v.A20hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="A20hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.A20hSeance}
+                                </td>
+                                <td
+                                    class="{! v.B20hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="B20hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.B20hSeance}
+                                </td>
+                                <td
+                                    class="{! v.C20hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="C20hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.C20hSeance}
+                                </td>
+                                <td
+                                    class="{! v.D20hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="D20hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.D20hSeance}
+                                </td>
+                                <td
+                                    class="{! v.E20hSeance == v.simpleRecord.Name ? ' slds-box custom-box selected-box' : 'slds-box custom-box' }"
+                                    id="E20hSeance"
+                                    onclick="{!c.onSelected}"
+                                >
+                                    {!v.E20hSeance}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </lightning:layoutItem>
+            </lightning:layout>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="4" padding="arround-small">
+            <div class="slds">
+                <table
+                    class="slds-table slds-table--bordered slds-table--striped"
+                    padding="arround-small"
+                >
+                    <thead>
+                        <tr>
+                            <th>Séances choisies</th>
+                        </tr>
+                    </thead>
+                    <tbody class="slds-scrollable">
+                        <aura:iteration
+                            items="{!v.selectedSeances}"
+                            var="seanceString"
+                        >
+                            <tr>
+                                <td>{!seanceString}</td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>
